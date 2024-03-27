@@ -8,11 +8,7 @@ class PrintEditionItem {
 	}
 
 	fix() {
-		let newState = this.state * 1.5;
-		if (newState > 100) {
-			newState = 100;
-		}
-		this._state = newState;
+		this.state = this.state * 1.5;
 	}
 
 
@@ -85,32 +81,17 @@ class Library {
 	}
 
 	findBookBy(type, value) {
-		for (let item of this.books) {
-			if (item[type] === value) {
-				return item;
-			}
+		const findResult = this.books.find((item) => item[type] === value);
+		return findResult || null;
+	   }
 
-		}
-		return null;
-	}
-
-	giveBookByName(bookName) {
-		for (let book of this.books) {
-			if (book.name === bookName) {
-				this.books.splice(this.books.indexOf(book), 1);
-				return book;
-			}
-		}
-		return null;
-	}
-
+	   giveBookByName(bookName) {
+		const book = this.findBookBy("name", bookName);
+		if (!book) return null;
+		this.books = this.books.filter((item) => item.name !== bookName);
+		return book;
+	  }
 }
-
-
-
-
-
-
 
 
 
@@ -159,13 +140,8 @@ class Student {
 		});
 
 
-		return totalAverage / subjects.length;
+		return totalAverage / subjects.length || 0;
+
 	}
 }
 
-
-  
-  
-  
-  
-  
